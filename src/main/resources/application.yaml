@@ -1,0 +1,10 @@
+server:
+  port: 8189
+  servlet:
+    context-path: /app
+
+
+
+# application.properties vs application.yaml
+#server.port=8189
+#server.servlet.context-path=/app
