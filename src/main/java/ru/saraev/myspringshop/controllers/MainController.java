@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.saraev.myspringshop.dto.Student;
+import ru.saraev.myspringshop.services.ProductService;
 import ru.saraev.myspringshop.services.StudentService;
 
 @Controller
@@ -15,6 +15,7 @@ import ru.saraev.myspringshop.services.StudentService;
 public class MainController {
 
     private final StudentService studentService;
+    private final ProductService productService;
 
     // http://localhost:8189/app
 
@@ -61,5 +62,17 @@ public class MainController {
     public String students(Model model) {
         model.addAttribute("students", studentService.getAllStudents());
         return "students.html";
+    }
+
+    @GetMapping("/product")
+    public String product(Model model, @RequestParam Long id) {
+        model.addAttribute("product", productService.getProduct(id));
+        return "product-page.html";
+    }
+
+    @GetMapping("/products")
+    public String products(Model model) {
+        model.addAttribute("products", productService.getProducts());
+        return "products-page.html";
     }
 }
