@@ -51,25 +51,28 @@ public class MainController {
     // 1) Приходит запрос на страницу page
     // 2) Создаем модель, которую отдадим на нашу страницу
     // 3) Thymeleaf вшивает модель, которую мы создали в страницу (перед тем как отдать ее)
-    // http://localhost:8189/app/page
+    // http://localhost:8189/app/page?id=1
     @GetMapping("/page")
     public String page(Model model, @RequestParam Long id) {
         model.addAttribute("studentFront", studentService.getStudent(id));
         return "index.html";
     }
 
+    // http://localhost:8189/app/students
     @GetMapping("/students")
     public String students(Model model) {
         model.addAttribute("students", studentService.getAllStudents());
         return "students.html";
     }
 
+    // http://localhost:8189/app/product?id=1
     @GetMapping("/product")
     public String product(Model model, @RequestParam Long id) {
         model.addAttribute("product", productService.getProduct(id));
         return "product-page.html";
     }
 
+    // http://localhost:8189/app/products
     @GetMapping("/products")
     public String products(Model model) {
         model.addAttribute("products", productService.getProducts());
