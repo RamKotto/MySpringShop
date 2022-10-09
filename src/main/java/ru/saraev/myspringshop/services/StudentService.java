@@ -20,4 +20,12 @@ public class StudentService {
     public List<Student> getAllStudents() {
         return studentRepository.getAll();
     }
+
+    public void addNewStudent(Long id, String name) {
+        studentRepository.add(id, name);
+    }
+
+    public void addNewStudent(Student student) {
+        studentRepository.add(student.getId(), student.getName());
+    }
 }

@@ -16,11 +16,9 @@ public class StudentRepository {
     @PostConstruct
     public void init() {
         this.students = new ArrayList<>(Arrays.asList(
-                new Student(1L, "Milk"),
-                new Student(2L, "Bread"),
-                new Student(3L, "Potato"),
-                new Student(4L, "Onion"),
-                new Student(5L, "Sugar")
+                new Student(1L, "Mark"),
+                new Student(2L, "Dmitriy"),
+                new Student(3L, "Elena")
         ));
     }
 
@@ -30,5 +28,9 @@ public class StudentRepository {
 
     public Student getById(Long id) {
         return students.stream().filter(p -> p.getId().equals(id)).findFirst().orElseThrow();
+    }
+
+    public void add(Long id, String name) {
+        students.add(new Student(id, name));
     }
 }
