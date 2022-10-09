@@ -66,7 +66,7 @@ public class MainController {
         studentService.addNewStudent(id, name);
     }
 
-    @PostMapping
+    @PostMapping("/student/add")
     @ResponseBody
     public void addStudentPost(@RequestBody Student student) {
         studentService.addNewStudent(student);
