@@ -18,17 +18,17 @@ public class ProductController {
     }
 
     @GetMapping("/product/all")
-    public List<Product> getTest(){
+    public List<Product> getAllProducts(){
         return service.getAllProducts();
     }
 
     @GetMapping("/product/change_price")
-    public void changeScore(@RequestParam Long productId, @RequestParam Long price){
+    public void changePrice(@RequestParam Long productId, @RequestParam Long price){
         service.changePrice(productId, price);
     }
 
     @PostMapping("/product/add")
-    public void addClientPost(@RequestBody Product product){
+    public void addNewProduct(@RequestBody Product product){
         service.addNewProduct(product);
     }
 }
