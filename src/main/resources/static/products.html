@@ -9,26 +9,26 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-    <script src="index.js"></script>
-    <title>Клиенты</title>
+    <script src="products.js"></script>
+    <title>Продукты</title>
 </head>
 <body>
 <div class="container" ng-controller="indexController">
-    <h3>Список клиентов</h3>
+    <h3>Список продуктов</h3>
     <table class="table table-hover" cellpadding="0" cellspacing="0">
         <tr>
             <td>ID</td>
-            <td>Имя клиента</td>
-            <td>Баллы</td>
+            <td>Продукт</td>
+            <td>Стоимость</td>
         </tr>
         <tbody>
-        <tr ng-repeat="s in clientList">
-            <td>{{s.id}}</td>
-            <td>{{s.name}}</td>
+        <tr ng-repeat="p in productList">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
             <td>
-                <button class="btn btn-danger" ng-click="changeScore(s.id, -5)">-</button>
-                {{s.score}}
-                <button class="btn btn-primary" ng-click="changeScore(s.id, 5)">+</button>
+                <button class="btn btn-danger" ng-click="changePrice(p.id, -5)">-</button>
+                {{p.price}}
+                <button class="btn btn-primary" ng-click="changePrice(p.id, 5)">+</button>
             </td>
         </tbody>
     </table>

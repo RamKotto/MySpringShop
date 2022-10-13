@@ -1,6 +1,6 @@
 package ru.saraev.myspringshop.services;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.saraev.myspringshop.dto.Product;
 import ru.saraev.myspringshop.repositories.ProductRepository;
@@ -8,16 +8,29 @@ import ru.saraev.myspringshop.repositories.ProductRepository;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService {
 
-    private final ProductRepository repository;
+    private ProductRepository repository;
 
-    public Product getProduct(Long id){
-        return repository.getProductById(id);
+    @Autowired
+    public void setRepository(ProductRepository repository) {
+        this.repository = repository;
     }
 
-    public List<Product> getProducts() {
-        return repository.getAllProducts();
+    public List<Product> getAllProducts() {
+        return repository.getAll();
+    }
+
+    public void addNewProduct(Long id, String name, Long price) {
+        repository.add(id, name, price);
+    }
+
+    public void addNewProduct(Product product) {
+        repository.addProduct(product);
+    }
+
+    public void changePrice(Long id, Long price) {
+        Product product = repository.getById(id);
+        product.setPrice(product.getPrice() + price);
     }
 }
