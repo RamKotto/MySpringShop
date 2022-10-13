@@ -20,6 +20,7 @@
             <td>ID</td>
             <td>Продукт</td>
             <td>Стоимость</td>
+            <td>Действие</td>
         </tr>
         <tbody>
         <tr ng-repeat="p in productList">
@@ -29,6 +30,9 @@
                 <button class="btn btn-danger" ng-click="changePrice(p.id, -5)">-</button>
                 {{p.price}}
                 <button class="btn btn-primary" ng-click="changePrice(p.id, 5)">+</button>
+            </td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">DELETE</button>
             </td>
         </tbody>
     </table>

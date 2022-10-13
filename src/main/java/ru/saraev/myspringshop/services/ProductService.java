@@ -33,4 +33,8 @@ public class ProductService {
         Product product = repository.getById(id);
         product.setPrice(product.getPrice() + price);
     }
+
+    public void deleteProduct(Long id) {
+        repository.deleteById(id);
+    }
 }
