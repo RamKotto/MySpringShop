@@ -3,8 +3,11 @@ package ru.saraev.myspringshop.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import ru.saraev.myspringshop.dto.Student;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import ru.saraev.myspringshop.services.ProductService;
 import ru.saraev.myspringshop.services.StudentService;
 
 @Controller
@@ -12,6 +15,7 @@ import ru.saraev.myspringshop.services.StudentService;
 public class MainController {
 
     private final StudentService studentService;
+    private final ProductService productService;
 
     // http://localhost:8189/app
 
@@ -37,7 +41,7 @@ public class MainController {
         return a + b;
     }
 
-    // http://localhost:8189/app/product/12/info
+    // http://localhost:8189/product/12/info
     @GetMapping("/product/{anyName}/info")
     @ResponseBody
     public String info(@PathVariable(name = "anyName") String id) {
@@ -47,34 +51,31 @@ public class MainController {
     // 1) Приходит запрос на страницу page
     // 2) Создаем модель, которую отдадим на нашу страницу
     // 3) Thymeleaf вшивает модель, которую мы создали в страницу (перед тем как отдать ее)
-    // http://localhost:8189/app/page
+    // http://localhost:8189/app/page?id=1
     @GetMapping("/page")
     public String page(Model model, @RequestParam Long id) {
         model.addAttribute("studentFront", studentService.getStudent(id));
         return "index.html";
     }
 
+    // http://localhost:8189/app/students
     @GetMapping("/students")
     public String students(Model model) {
         model.addAttribute("students", studentService.getAllStudents());
         return "students.html";
     }
 
-    @GetMapping("/student/add")
-    @ResponseBody
-    public void addStudent(@RequestParam Long id, @RequestParam String name) {
-        studentService.addNewStudent(id, name);
+    // http://localhost:8189/app/product?id=1
+    @GetMapping("/product")
+    public String product(Model model, @RequestParam Long id) {
+        model.addAttribute("product", productService.getProduct(id));
+        return "product-page.html";
     }
 
-    @PostMapping("/student/add")
-    @ResponseBody
-    public void addStudentPost(@RequestBody Student student) {
-        studentService.addNewStudent(student);
-    }
-
-    // http://localhost:8189/app/form_page
-    @GetMapping("/form_page")
-    public String form() {
-        return "add_student_form";
+    // http://localhost:8189/app/products
+    @GetMapping("/products")
+    public String products(Model model) {
+        model.addAttribute("products", productService.getProducts());
+        return "products-page.html";
     }
 }
