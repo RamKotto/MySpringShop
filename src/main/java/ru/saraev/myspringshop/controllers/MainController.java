@@ -66,16 +66,16 @@ public class MainController {
     }
 
     // http://localhost:8189/app/product?id=1
-    @GetMapping("/product")
-    public String product(Model model, @RequestParam Long id) {
-        model.addAttribute("product", productService.getProduct(id));
-        return "product-page.html";
-    }
-
-    // http://localhost:8189/app/products
-    @GetMapping("/products")
-    public String products(Model model) {
-        model.addAttribute("products", productService.getProducts());
-        return "products-page.html";
-    }
+//    @GetMapping("/product")
+//    public String product(Model model, @RequestParam Long id) {
+//        model.addAttribute("product", productService.getProduct(id));
+//        return "product-page.html";
+//    }
+//
+//    // http://localhost:8189/app/products
+//    @GetMapping("/products")
+//    public String products(Model model) {
+//        model.addAttribute("products", productService.getProducts());
+//        return "products-page.html";
+//    }
 }
