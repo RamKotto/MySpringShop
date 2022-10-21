@@ -1,46 +1,19 @@
 package ru.saraev.myspringshop.repositories;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import ru.saraev.myspringshop.dto.Product;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-@Repository
-public class ProductRepository {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    private List<Product> products;
+    List<Product> findAllByPriceBetween(Integer min, Integer max);
 
-    @PostConstruct
-    public void init() {
-        this.products = new ArrayList<>(Arrays.asList(
-                new Product(1L, "Milk",10L),
-                new Product(2L, "Potato",16L),
-                new Product(3L, "Cheese",28L),
-                new Product(4L, "Onion",5L),
-                new Product(5L, "Apple",12L)
-        ));
-    }
+    @Query("select p from Product p where p.price < 80")
+    List<Product> findLowPriceProducts();
 
-    public Product getById(Long id){
-        return products.stream().filter(p -> p.getId().equals(id)).findFirst().orElseThrow();
-    }
-
-    public List<Product> getAll(){
-        return products;
-    }
-
-    public void add(Long id, String name, Long price) {
-        products.add(new Product(id, name, price));
-    }
-
-    public void addProduct(Product product) {
-        products.add(product);
-    }
-
-    public void deleteById(Long id) {
-        products.removeIf(p -> p.getId().equals(id));
-    }
+    @Query("select p from Product p where p.title = :title")
+    Optional<Product> findProductByTitle(String title);
 }

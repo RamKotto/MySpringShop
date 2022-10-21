@@ -2,10 +2,12 @@ package ru.saraev.myspringshop.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.saraev.myspringshop.dto.Product;
 import ru.saraev.myspringshop.repositories.ProductRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ProductService {
@@ -17,24 +19,37 @@ public class ProductService {
         this.repository = repository;
     }
 
+    public Product findById(Long id) {
+        return repository.findById(id).orElseThrow();
+    }
+
     public List<Product> getAllProducts() {
-        return repository.getAll();
+        return repository.findAll();
     }
 
-    public void addNewProduct(Long id, String name, Long price) {
-        repository.add(id, name, price);
+    public void createNewProduct(Product product) {
+        try {
+            findByTitle(product.getTitle());
+        } catch (NoSuchElementException ex) {
+            repository.save(product);
+        }
     }
 
-    public void addNewProduct(Product product) {
-        repository.addProduct(product);
-    }
-
-    public void changePrice(Long id, Long price) {
-        Product product = repository.getById(id);
-        product.setPrice(product.getPrice() + price);
+    public Product findByTitle(String title) {
+        return repository.findProductByTitle(title).orElseThrow();
     }
 
     public void deleteProduct(Long id) {
         repository.deleteById(id);
+    }
+
+    public List<Product> findByPrice(Integer min, Integer max) {
+        return repository.findAllByPriceBetween(min, max);
+    }
+
+    @Transactional
+    public void changePrice(Long productId, Integer price) {
+        Product product = repository.getById(productId);
+        product.setPrice(price);
     }
 }

@@ -1,0 +1,1 @@
+ALTER TABLE products ADD COLUMN summary varchar(255);
