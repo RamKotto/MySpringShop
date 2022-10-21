@@ -17,23 +17,35 @@ public class ProductController {
         this.service = service;
     }
 
-    @GetMapping("/product/all")
-    public List<Product> getAllProducts(){
+    @GetMapping("/products/{id}")
+    public Product findProductById(@PathVariable Long id) {
+        return service.findById(id);
+    }
+
+    @GetMapping("/products")
+    public List<Product> getAllProducts() {
         return service.getAllProducts();
     }
 
-    @GetMapping("/product/change_price")
-    public void changePrice(@RequestParam Long productId, @RequestParam Long price){
-        service.changePrice(productId, price);
-    }
-
-    @PostMapping("/product/add")
-    public void addNewProduct(@RequestBody Product product){
-        service.addNewProduct(product);
+    @PostMapping("/products")
+    public Product addNewProduct(@RequestBody Product product) {
+        service.createNewProduct(product);
+        return service.findByTitle(product.getTitle());
     }
 
     @GetMapping("/products/delete/{id}")
     public void delete(@PathVariable Long id) {
         service.deleteProduct(id);
+    }
+
+    @GetMapping("/products/price_between")
+    public List<Product> findByPriceBetween(@RequestParam(defaultValue = "0") Integer min,
+                                            @RequestParam(defaultValue = "1000") Integer max) {
+        return service.findByPrice(min, max);
+    }
+
+    @GetMapping("/products/change_price")
+    public void changeProductPrice(@RequestParam(name = "id") Long productId, @RequestParam Integer price) {
+        service.changePrice(productId, price);
     }
 }
