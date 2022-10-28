@@ -8,7 +8,7 @@ public interface ProductDao {
 
     List<Product> findAll();
 
-    Product findByTitle(String login);
+    Product findByTitle(String title);
 
     void save(User user);
 

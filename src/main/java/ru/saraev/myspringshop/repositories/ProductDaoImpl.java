@@ -1,7 +1,6 @@
 package ru.saraev.myspringshop.repositories;
 
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.saraev.myspringshop.dao.Product;
 import ru.saraev.myspringshop.dao.ProductDao;
@@ -40,8 +39,14 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Product findByTitle(String login) {
-        return null;
+    public Product findByTitle(String title) {
+        try (Session session = sessionFactoryUtils.getSession()) {
+            session.beginTransaction();
+            List<Product> products = session.createQuery("select p from Product p").getResultList();
+            Product product = products.stream().filter(p -> p.getTitle().equals(title)).findAny().orElseThrow();
+            session.getTransaction().commit();
+            return product;
+        }
     }
 
     @Override
@@ -59,11 +64,6 @@ public class ProductDaoImpl implements ProductDao {
         try (Session session = sessionFactoryUtils.getSession()) {
             session.beginTransaction();
             Product product = session.get(Product.class, product_id);
-            System.out.println(product);
-            System.out.println("Users: ");
-            for (User u : product.getUsers()) {
-                System.out.println(u.getLogin());
-            }
             session.getTransaction().commit();
             return product.getUsers();
         }
@@ -78,5 +78,6 @@ public class ProductDaoImpl implements ProductDao {
 
         System.out.println(productDao.findAll());
         System.out.println(productDao.getAllUsersByProductId(3l));
+        System.out.println(productDao.findByTitle("Cheese"));
     }
 }

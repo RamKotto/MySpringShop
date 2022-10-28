@@ -18,7 +18,7 @@ public class Product {
     @Column(name = "price")
     private int price;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "orders",
             joinColumns = @JoinColumn(name = "product_id"),
