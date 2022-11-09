@@ -3,6 +3,7 @@ package ru.saraev.myspringshop.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.saraev.myspringshop.dto.Product;
+import ru.saraev.myspringshop.exceptions.ResourceNotFountException;
 import ru.saraev.myspringshop.services.ProductService;
 
 import java.util.List;
@@ -19,7 +20,9 @@ public class ProductController {
 
     @GetMapping("/products/{id}")
     public Product findProductById(@PathVariable Long id) {
-        return service.findById(id);
+        return service.findById(id).orElseThrow(() -> new ResourceNotFountException(
+                "Product with id: " + id + " is not found =("
+        ));
     }
 
     @GetMapping("/products")

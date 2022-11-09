@@ -8,6 +8,7 @@ import ru.saraev.myspringshop.repositories.ProductRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -19,8 +20,8 @@ public class ProductService {
         this.repository = repository;
     }
 
-    public Product findById(Long id) {
-        return repository.findById(id).orElseThrow();
+    public Optional<Product> findById(Long id) {
+        return repository.findById(id);
     }
 
     public List<Product> getAllProducts() {
