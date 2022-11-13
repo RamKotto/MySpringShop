@@ -12,4 +12,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<AppError> catchResourceNotFoundException(ResourceNotFountException e) {
         return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), e.getMessage()), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<AppError> catchExistEntityException(ExistEntityException e) {
+        return new ResponseEntity<>(new AppError(HttpStatus.CONFLICT.value(), e.getMessage()), HttpStatus.CONFLICT);
+    }
 }

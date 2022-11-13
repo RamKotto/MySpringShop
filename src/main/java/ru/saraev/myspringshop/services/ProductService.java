@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.saraev.myspringshop.dto.Product;
+import ru.saraev.myspringshop.exceptions.ExistEntityException;
 import ru.saraev.myspringshop.repositories.ProductRepository;
 
 import java.util.List;
@@ -29,9 +30,9 @@ public class ProductService {
     }
 
     public void createNewProduct(Product product) {
-        try {
-            findByTitle(product.getTitle());
-        } catch (NoSuchElementException ex) {
+        if (repository.existsProductByTitle(product.getTitle())) {
+            throw new ExistEntityException("Продукт с названием: " + product.getTitle() + " уже существует в базе!");
+        } else {
             repository.save(product);
         }
     }
@@ -51,6 +52,6 @@ public class ProductService {
     @Transactional
     public void changePrice(Long productId, Integer price) {
         Product product = repository.getById(productId);
-        product.setPrice(price);
+        product.setPrice(product.getPrice() + price);
     }
 }

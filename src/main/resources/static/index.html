@@ -28,15 +28,28 @@
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>
-                <button class="btn btn-danger" ng-click="changePrice(p.id, -5)">-</button>
+                <button class="btn btn-danger" ng-click="changePrice(p.id, -1)">-</button>
                 {{p.price}}
-                <button class="btn btn-primary" ng-click="changePrice(p.id, 5)">+</button>
+                <button class="btn btn-primary" ng-click="changePrice(p.id, 1)">+</button>
             </td>
             <td>
                 <button class="btn btn-danger" ng-click="deleteProduct(p.id)">DELETE</button>
             </td>
         </tbody>
     </table>
+
+    <p></p>
+
+    <h3>Добавить продукт через JSON</h3>
+    <form novalidate ng-submit="createProduct()">
+        <input type="text" class="form-control" placeholder="Название" ng-model="newProduct.title">
+        <p></p>
+        <input type="number" class="form-control" placeholder="Цена" ng-model="newProduct.price">
+        <p></p>
+        <button class="btn btn-primary" type="submit">Добавить продукт</button>
+    </form>
+
 </div>
+
 </body>
 </html>
