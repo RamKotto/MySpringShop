@@ -24,6 +24,20 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
         });
     };
 
+    $scope.getProductsByPrice = function () {
+        $http({
+            url: contextPath + '/products/price_between',
+            method: 'GET',
+            params: {
+                min: $scope.filtered.min,
+                max: $scope.filtered.max
+            }
+        }).then(function (response) {
+            console.log(response.data)
+            $scope.productList = response.data;
+        });
+    };
+
     $scope.createProduct = function () {
         console.log($scope.newProduct);
         $http.post(contextPath + '/products', $scope.newProduct)
